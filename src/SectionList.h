@@ -4,14 +4,17 @@
 class SectionList
 {
 private:
-	SectionListNode* head;
+	SectionListNode* head; //Section List Head
 
 public:
-	SectionList();
+	SectionList(int number);
 	~SectionList();
 
 	SectionListNode* getHead();
+	int getNumber();
 
 	// Insert
+	void insert();
 	// Search
+	SectionListNode* search();
 };

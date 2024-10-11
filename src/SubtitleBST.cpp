@@ -15,9 +15,10 @@ SubtitleBSTNode* SubtitleBST::getRoot()
 }
 
 // Insert
-
+void insert();
 // Print
-
+void print();
 // Search
-
+void search();
 // Delete
+void del();

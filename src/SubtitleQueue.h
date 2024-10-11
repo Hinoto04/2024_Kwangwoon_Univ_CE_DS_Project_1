@@ -1,9 +1,13 @@
 #pragma once
 #include "SubtitleQueueNode.h"
+#define MAX 100
 
 class SubtitleQueue
 {
 private:
+	SubtitleQueueNode queue[MAX+1]; //Circular Queue
+	int front = 0;
+	int rear = 0;
 
 public:
 	SubtitleQueue();

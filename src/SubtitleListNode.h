@@ -1,10 +1,12 @@
 #pragma once
+#include "Subtitle.h"
 
 class SubtitleListNode
 {
 private:
 
-	SubtitleListNode*	next;
+	SubtitleListNode*	next; //Next Content Node
+	Subtitle sub;
 
 public:
 	SubtitleListNode() : next(nullptr) {}

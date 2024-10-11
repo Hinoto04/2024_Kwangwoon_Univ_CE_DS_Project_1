@@ -1,12 +1,13 @@
 #include "SectionList.h"
 
-SectionList::SectionList(): head(nullptr)
+SectionList::SectionList(int number):
 {
-
+	this.number = number;
+	this.head = nullptr;
 }
 SectionList::~SectionList()
 {
-
+	
 }
 
 SectionListNode* SectionList::getHead()
@@ -14,6 +15,15 @@ SectionListNode* SectionList::getHead()
 	return head;
 }
 
-// Insert
+int SectionList::getNumber() {
+	return this.number;
+}
 
+// Insert
+void SectionList::insert() {
+	return;
+}
 // Search
+void SectionList::search() {
+	return;
+}

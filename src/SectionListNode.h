@@ -4,8 +4,9 @@
 class SectionListNode
 {
 private:
-
-	SectionListNode*	next;
+	int number; //Section Number
+	SectionListNode* next; //Next Section Node
+	SubtitleListNode* head; //Content List Head
 
 public:
 	SectionListNode() : next(nullptr) {}
