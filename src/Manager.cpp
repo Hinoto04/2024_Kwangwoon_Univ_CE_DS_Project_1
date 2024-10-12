@@ -63,9 +63,11 @@ void Manager::load() {
         int m = stoi(str.substr(3, 2)); //00:|00:
         int s = stoi(str.substr(6, 2)); //00:00:|00
         //int time = timeInSeconds(h, m, s);
-        string content = str.substr(9) //00:00:00 |
+        string content = str.substr(9); //00:00:00 |
 
-        this.q.push(h, m, s, content)
+        this.q.push(h, m, s, content);
+
+        flog << h << ':' << m << ':' << s << " - " << content << endl
     }
 
     return;
