@@ -11,6 +11,7 @@ private:
 
 	SubtitleBSTNode* recursiveSearch(SubtitleBSTNode* now, int timeToSecond);
 	void recursivePrint(SubtitleBSTNode* now, ostream& os);
+	SubtitleBSTNode* recursiveDelete(SubtitleBSTNode* now, SubtitleBSTNode* parent, int time);
 
 public:
 	SubtitleBST();

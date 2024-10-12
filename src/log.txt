@@ -99,8 +99,6 @@ Success
 00:52:21 - Bed? Before dinner?
 00:52:23 - I'm really, really tired. Yeah.
 00:53:50 - Mom! Dad! 
-00:52:36 - You're welcome.
-00:53:56 - Oh, God. I'm still here?
 00:54:16 - Hey, you! Where's the other mother?
 00:54:18 - I wanna go home.
 00:54:19 - All will be swell, soon as Mother's refreshed.
@@ -123,19 +121,12 @@ Success
 01:11:59 - And I'll let you sew buttons into my eyes.
 ===============
 
-===== ERROR =====
-500
+===== DELETE =====
+Success
 ===============
 
 ===== PRINT =====
-00:21:37 - See you soon.
-00:52:19 - I'm going to bed.
-00:52:20 - Right now!
-00:52:21 - Bed? Before dinner?
-00:52:23 - I'm really, really tired. Yeah.
 00:53:50 - Mom! Dad! 
-00:52:36 - You're welcome.
-00:53:56 - Oh, God. I'm still here?
 00:54:16 - Hey, you! Where's the other mother?
 00:54:18 - I wanna go home.
 00:54:19 - All will be swell, soon as Mother's refreshed.

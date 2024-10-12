@@ -208,8 +208,9 @@ int Manager::section(int number, int start, int end) {
 int Manager::del(int mode, int time) {
     int result = 0;
     if(mode == 0) { //UNDER
-        return -1;
+        result = this->bst.delUnder(time);
+    } else {
+        result = this->bst.delOne(time);
     }
-    result = this->bst.delOne(time);
     return result;
 }

@@ -32,16 +32,16 @@ void SubtitleBST::recursivePrint(SubtitleBSTNode* now, ostream& os) {
 	this->recursivePrint(now->getRight(), os);
 }
 
-SubtitleBSTNode* SubtitleBST::recursiveDelete(SubtitelBSTNode* now, SubtitleBSTNode* parent, int time) {
+SubtitleBSTNode* SubtitleBST::recursiveDelete(SubtitleBSTNode* now, SubtitleBSTNode* parent, int time) {
 	if(!now) return nullptr;
 
-	SubtitelBSTNode* result = nullptr;
+	SubtitleBSTNode* target = nullptr;
 	if(now->sub.toSeconds() > time) {
-		result = this->recursiveDelete(now->getLeft(), now, time);
+		target = this->recursiveDelete(now->getLeft(), now, time);
 	} else if(now->sub.toSeconds() < time) {
-		result = this->recursiveDelete(now->getRight(), now, time);
+		target = this->recursiveDelete(now->getRight(), now, time);
 	} else {
-		result = now;
+		target = now;
 
 		if(!now->getLeft() && !now->getRight()) {
 			if(parent->getLeft() == target) parent->setLeft(nullptr);
@@ -65,12 +65,13 @@ SubtitleBSTNode* SubtitleBST::recursiveDelete(SubtitelBSTNode* now, SubtitleBSTN
 			while(minInRight->getLeft()) {
 				minInRight = minInRight->getLeft();
 			}
-			minInRight = this->recursiveDelete(now, nullptr, minInRight->sub.toSeconds());
+			minInRight = this->recursiveDelete(now->getRight(), now, minInRight->sub.toSeconds());
 			now->sub = minInRight->sub;
+			target = minInRight;
 		}
 	}
 
-	return result;
+	return target;
 }
 
 // Insert
@@ -104,9 +105,21 @@ void SubtitleBST::print(ostream& os) {
 SubtitleBSTNode* SubtitleBST::search(int timeToSecond) {
 	return this->recursiveSearch(this->root, timeToSecond);
 }
-// Delete
+// Delete Under
 int SubtitleBST::delUnder(int timeToSecond) {
-	return 0;
+	SubtitleBSTNode* target = this->root;
+	int count = 0;
+	while(true) {
+		SubtitleBSTNode* minNode = this->root;
+		while(minNode->getLeft()) {
+			minNode = minNode->getLeft();
+		}
+		if(minNode->sub.toSeconds() > timeToSecond) break;
+		this->delOne(minNode->sub.toSeconds());
+		count++;
+	}
+	if(count != 0) return 0;
+	else return -1;
 }
 // Delete One Node
 int SubtitleBST::delOne(int timeToSecond) {
@@ -114,66 +127,7 @@ int SubtitleBST::delOne(int timeToSecond) {
 	if(this->search(timeToSecond) == nullptr) {
 		return -1;
 	}
-	SubtitleBSTNode* parent;
-	SubtitleBSTNode* target;
-	SubtitleBSTNode* now = this->root;
-	while(now) {
-		if(now->getLeft() && now->getLeft()->sub.toSeconds() == timeToSecond) {
-			parent = now;
-		} else if(now->getRight() && now->getRight()->sub.toSeconds() == timeToSecond) {
-			parent = now;
-		}
-		
-		if(now->sub.toSeconds() == timeToSecond) {
-			target = now;
-			break;
-		} else if(now->sub.toSeconds() > timeToSecond) {
-			now = now->getLeft();
-		} else {
-			now = now->getRight();
-		}
-	}
-
-	if(!target->getRight() && !target->getLeft()) { //No Node in Left and Right
-		cout << "CHILD NONE" << endl;
-		if(parent->getLeft() == target) parent->setLeft(nullptr);
-		else parent->setRight(nullptr);
-		delete target;
-		return 0;
-	}
-	if(!target->getRight() && target->getLeft()) { //Node in Left Only
-		cout << "LEFT" << endl;
-		if(!parent) {
-			this->root = target->getLeft();
-			delete target;
-		} else {
-			if(parent->getLeft() == target) parent->setLeft(nullptr);
-			else parent->setRight(nullptr);
-			delete target;
-		}
-		return 0;
-	}
-	if(target->getRight() && !target->getLeft()) { //Node in Right Only
-		cout << "RIGHT" << endl;
-		if(!parent) {
-			this->root = target->getRight();
-			delete target;
-		} else {
-			if(parent->getLeft() == target) parent->setLeft(nullptr);
-			else parent->setRight(nullptr);
-			delete target;
-		}
-		return 0;
-	}
-	//Node in Left and Right
-	cout << "LEFT RIGHT" << endl;
-	SubtitleBSTNode* minInRight = target->getRight();
-	while(minInRight->getLeft()) {
-		minInRight = minInRight->getLeft();
-	}
-	Subtitle temp = minInRight->sub;
-	minInRight->sub = target->sub;
-	target->sub = temp;
-	this->delOne(minInRight->sub.toSeconds());
+	SubtitleBSTNode* target = this->recursiveDelete(this->root, nullptr, timeToSecond);
+	delete target;
 	return 0;
 }
