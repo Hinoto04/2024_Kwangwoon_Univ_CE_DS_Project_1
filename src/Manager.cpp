@@ -18,7 +18,7 @@ vector<string> split(string& str, const string& deli) {
     cuts.push_back(str);
     
     if(cuts[cuts.size()-1].length() == 0) {
-        cout << "BLANK ARGS" << endl;
+        cuts.pop_back();
     }
 
     return cuts;
@@ -108,9 +108,15 @@ void Manager::Run(const char* command)
         } else if(cuts[0] == "DELETE") {
             if(cuts.size() > 3 || cuts.size() < 3) {
                 result = -1;
-            } //else {
-                //result = this->del(1);
-            //}
+            } else {
+                vector<string> timecuts = split(cuts[2], ":");
+                int time = stoi(timecuts[0])*3600 + stoi(timecuts[1])*60 + stoi(timecuts[2]);
+                if(cuts[1] == "UNDER") {
+                    result = this->del(0, time);
+                } else {
+                    result = this->del(1, time);
+                }
+            }
             if(result == 0) PrintSuccess("DELETE");
             else PrintErrorCode(500);
 
@@ -195,11 +201,15 @@ int Manager::section(int number, int start, int end) {
     SectionListNode* newNode = new SectionListNode(number);
     newNode->sets(this->bst.getRoot(), start, end);
     newNode->print(cout);
-
     l.insert(newNode);
     return 0;
 }
 // DELETE
-int del(int mode, int time) {
-    return 0;
+int Manager::del(int mode, int time) {
+    int result = 0;
+    if(mode == 0) { //UNDER
+        return -1;
+    }
+    result = this->bst.delOne(time);
+    return result;
 }

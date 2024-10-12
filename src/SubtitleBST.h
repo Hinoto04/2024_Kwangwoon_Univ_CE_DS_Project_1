@@ -25,7 +25,7 @@ public:
 	// Search
 	SubtitleBSTNode* search(int timeToSecond);
 	// Delete
-	void del(int mode, int timeToSecond);
+	int delUnder(int timeToSecond);
 	// Delete One Node
-	void delOne(int timeToSecond);
+	int delOne(int timeToSecond);
 };

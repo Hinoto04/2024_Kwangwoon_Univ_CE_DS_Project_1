@@ -18,6 +18,10 @@ SectionListNode* SectionList::getHead()
 
 // Insert
 void SectionList::insert(SectionListNode* newNode) {
+	if(!this->head) {
+		this->head = newNode;
+		return;
+	}
 	SectionListNode* now = this->head;
 	while(now->getNext() != nullptr) { //To Last Node
 		now = now->getNext();
@@ -27,8 +31,8 @@ void SectionList::insert(SectionListNode* newNode) {
 }
 // Search
 SectionListNode* SectionList::search(int number) {
+	SectionListNode* now = this->head;
 	while(true) {
-		SectionListNode* now = this->head;
 		if(now == nullptr) {
 			return nullptr;
 		}

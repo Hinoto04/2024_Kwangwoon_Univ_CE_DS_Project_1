@@ -24,10 +24,9 @@ public:
 
 	void sets(SubtitleBSTNode* now, int start, int end) {
 		if(!now) return;
-		cout << "SETS" << endl;
-		this->sets(now->getLeft(), start, end);
+		if(now->sub.toSeconds() > start) this->sets(now->getLeft(), start, end);
 		if(now->sub.toSeconds() >= start && now->sub.toSeconds() <= end) insert(now->sub);
-		this->sets(now->getRight(), start, end);
+		if(now->sub.toSeconds() < end) this->sets(now->getRight(), start, end);
 		return;
 	}
 
@@ -46,7 +45,7 @@ public:
 	int size() {
 		SubtitleListNode* now = this->head;
 		int count = 0;
-		while(!now) {
+		while(now) {
 			now = now->getNext();
 			count++;
 		}
@@ -55,7 +54,7 @@ public:
 
 	void print(ostream& os) {
 		SubtitleListNode* now = this->head;
-		while(!now) {
+		while(now) {
 			os << setfill('0');
 			os << setw(2) << now->sub.h << ':';
 			os << setw(2) << now->sub.m << ':';
