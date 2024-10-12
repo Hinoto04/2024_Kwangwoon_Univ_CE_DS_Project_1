@@ -7,14 +7,13 @@ private:
 	SectionListNode* head; //Section List Head
 
 public:
-	SectionList(int number);
+	SectionList();
 	~SectionList();
 
 	SectionListNode* getHead();
-	int getNumber();
 
 	// Insert
 	void insert();
 	// Search
-	SectionListNode* search();
+	SectionListNode* search(int number);
 };

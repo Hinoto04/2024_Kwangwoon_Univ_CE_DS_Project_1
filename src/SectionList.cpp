@@ -1,9 +1,10 @@
 #include "SectionList.h"
+#include "SubtitleListNode.h"
+#include "SubtitleBST"
 
-SectionList::SectionList(int number):
+SectionList::SectionList():
 {
-	this.number = number;
-	this.head = nullptr;
+	this->head = nullptr;
 }
 SectionList::~SectionList()
 {
@@ -15,15 +16,26 @@ SectionListNode* SectionList::getHead()
 	return head;
 }
 
-int SectionList::getNumber() {
-	return this.number;
-}
-
 // Insert
-void SectionList::insert() {
+void SectionList::insert(SubtitleListNode* head, int number) {
+	SectionListNode* now = this->head;
+	while(now->next != nullptr) {
+		now = now->next;
+	}
+	now.head = new SectionListNode(number, head);
 	return;
 }
 // Search
-void SectionList::search() {
-	return;
+SectionListNode* SectionList::search(int number) {
+	while(true) {
+		SectionList* now = this->head;
+		if(now == nullptr) {
+			return nullptr;
+		}
+		if(now.getNumber() == number) {
+			return now;
+		}
+		now = now->getNext();
+	}
+	
 }

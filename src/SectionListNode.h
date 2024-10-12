@@ -9,10 +9,14 @@ private:
 	SubtitleListNode* head; //Content List Head
 
 public:
-	SectionListNode() : next(nullptr) {}
+	SectionListNode(int number, SubtitleListNode* head) : next(nullptr) {
+		this->number = number;
+		this->head = head;
+	}
 	~SectionListNode() {}
 
 	SectionListNode*	getNext()		 	{ return next; }
-	
 	void setNext(SectionListNode* next)	 					{ this->next = next; }
+
+	int getNumber() { return this->number; }
 };

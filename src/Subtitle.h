@@ -15,9 +15,9 @@ class Subtitle {
         }
 
         void set(int h, int m, int s, string str) { //Subtitle information Setting
-            this.h = h;
-            this.m = m;
-            this.s = s;
-            this.str = str;
+            this->h = h;
+            this->m = m;
+            this->s = s;
+            this->str = str;
         }
 }
