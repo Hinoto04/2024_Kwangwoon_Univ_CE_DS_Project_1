@@ -1,4 +1,6 @@
 #include "SubtitleQueue.h"
+#include <string>
+using namespace std;
 
 SubtitleQueue::SubtitleQueue()
 {
@@ -31,7 +33,7 @@ void SubtitleQueue::Push(int h, int m, int s, string str)
 SubtitleQueueNode SubtitleQueue::Pop()
 {
 	this->front = (this->front+1)%(MAX+1);
-    return this->queue[(this->front+1)%(MAX+1)];
+    return this->queue[this->front];
 }
 SubtitleQueueNode SubtitleQueue::Front()
 {

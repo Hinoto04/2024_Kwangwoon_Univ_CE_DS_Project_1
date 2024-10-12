@@ -2,6 +2,9 @@
 #include "SubtitleQueueNode.h"
 #define MAX 100
 
+#include <string>
+using namespace std;
+
 class SubtitleQueue
 {
 private:
@@ -15,7 +18,7 @@ public:
 
 	bool IsEmpty();
 	bool IsFull();
-	void Push();
+	void Push(int h, int m, int s, string str);
 	SubtitleQueueNode Pop();
 	SubtitleQueueNode Front();
 };

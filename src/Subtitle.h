@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 class Subtitle {
     public:
@@ -7,8 +9,12 @@ class Subtitle {
         int s = 0; //second
         string str; //subtitle content
 
-        Subtitle();
-        ~Subtitle();
+        Subtitle() {
+            return;
+        }
+        ~Subtitle() {
+            return;
+        }
 
         int toSeconds() { //time to seconds -> to Compare
             return h*3600 + m*60 + s;
@@ -20,4 +26,4 @@ class Subtitle {
             this->s = s;
             this->str = str;
         }
-}
+};

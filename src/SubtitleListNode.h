@@ -6,10 +6,12 @@ class SubtitleListNode
 private:
 
 	SubtitleListNode*	next; //Next Content Node
-	Subtitle sub;
 
 public:
-	SubtitleListNode() : next(nullptr) {}
+	Subtitle sub;
+	SubtitleListNode(Subtitle s) : next(nullptr) {
+		this->sub = s;
+	}
 	~SubtitleListNode() {}
 
 	SubtitleListNode*	getNext()			{ return next; }

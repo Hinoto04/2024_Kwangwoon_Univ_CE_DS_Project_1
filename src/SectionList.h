@@ -13,7 +13,7 @@ public:
 	SectionListNode* getHead();
 
 	// Insert
-	void insert();
+	void insert(SectionListNode* node);
 	// Search
 	SectionListNode* search(int number);
 };

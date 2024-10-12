@@ -1,12 +1,16 @@
 #pragma once
 #include "SubtitleBSTNode.h"
-#include "SectionListNode.h"
 #include "SectionList.h"
+#include <iostream>
+#include <iomanip>
 
 class SubtitleBST
 {
 private:
 	SubtitleBSTNode* root;
+
+	SubtitleBSTNode* recursiveSearch(SubtitleBSTNode* now, int timeToSecond);
+	void recursivePrint(SubtitleBSTNode* now, ostream& os);
 
 public:
 	SubtitleBST();
@@ -15,11 +19,13 @@ public:
 	SubtitleBSTNode* getRoot();
 
 	// Insert
-	void insert();
+	void insert(Subtitle sub);
 	// Print
-	void print();
+	void print(ostream& os);
 	// Search
-	void search();
+	SubtitleBSTNode* search(int timeToSecond);
 	// Delete
-	void del();
+	void del(int mode, int timeToSecond);
+	// Delete One Node
+	void delOne(int timeToSecond);
 };
