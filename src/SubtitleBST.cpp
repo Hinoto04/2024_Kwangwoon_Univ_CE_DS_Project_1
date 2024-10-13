@@ -23,6 +23,7 @@ SubtitleBSTNode* SubtitleBST::recursiveSearch(SubtitleBSTNode* now, int timeToSe
 
 void SubtitleBST::recursivePrint(SubtitleBSTNode* now, ostream& os) {
 	if(!now) return;
+	//In-Order Print
 	this->recursivePrint(now->getLeft(), os);
 	os << setfill('0');
 	os << setw(2) << now->sub.h << ':';
@@ -35,32 +36,33 @@ void SubtitleBST::recursivePrint(SubtitleBSTNode* now, ostream& os) {
 SubtitleBSTNode* SubtitleBST::recursiveDelete(SubtitleBSTNode* now, SubtitleBSTNode* parent, int time) {
 	if(!now) return nullptr;
 
+	//find target
 	SubtitleBSTNode* target = nullptr;
 	if(now->sub.toSeconds() > time) {
 		target = this->recursiveDelete(now->getLeft(), now, time);
 	} else if(now->sub.toSeconds() < time) {
 		target = this->recursiveDelete(now->getRight(), now, time);
 	} else {
-		target = now;
+		target = now; //Return target to Delete after logic
 
-		if(!now->getLeft() && !now->getRight()) {
+		if(!now->getLeft() && !now->getRight()) { //Have no child
 			if(parent->getLeft() == target) parent->setLeft(nullptr);
 			else parent->setRight(nullptr);
-		} else if(now->getLeft() && !now->getRight()) {
-			if(!parent) {
+		} else if(now->getLeft() && !now->getRight()) { //Have left child
+			if(!parent) { //if target is root
 			this->root = target->getLeft();
 			} else {
 				if(parent->getLeft() == target) parent->setLeft(nullptr);
 				else parent->setRight(nullptr);
 			}
-		} else if(!now->getLeft() && now->getRight()) {
-			if(!parent) {
+		} else if(!now->getLeft() && now->getRight()) { //Have right child
+			if(!parent) { //if target is root
 				this->root = target->getRight();
 			} else {
 				if(parent->getLeft() == target) parent->setLeft(nullptr);
 				else parent->setRight(nullptr);
 			}
-		} else {
+		} else { //Have all child
 			SubtitleBSTNode* minInRight = target->getRight();
 			while(minInRight->getLeft()) {
 				minInRight = minInRight->getLeft();
@@ -76,13 +78,13 @@ SubtitleBSTNode* SubtitleBST::recursiveDelete(SubtitleBSTNode* now, SubtitleBSTN
 
 // Insert
 void SubtitleBST::insert(Subtitle sub) {
-	if(!this->root) {
+	if(!this->root) { //If no root
 		this->root = new SubtitleBSTNode(sub);
 		return;
 	}
 	SubtitleBSTNode* now = this->root;
 	SubtitleBSTNode* parent;
-	while(now) {
+	while(now) { //Find Insert Position
 		parent = now;
 		if(parent->sub.toSeconds() > sub.toSeconds()) {
 			now = now->getLeft();
@@ -109,7 +111,7 @@ SubtitleBSTNode* SubtitleBST::search(int timeToSecond) {
 int SubtitleBST::delUnder(int timeToSecond) {
 	SubtitleBSTNode* target = this->root;
 	int count = 0;
-	while(true) {
+	while(true) { //Delete Min Value while Min Value is lower than target
 		SubtitleBSTNode* minNode = this->root;
 		while(minNode->getLeft()) {
 			minNode = minNode->getLeft();
@@ -123,7 +125,7 @@ int SubtitleBST::delUnder(int timeToSecond) {
 }
 // Delete One Node
 int SubtitleBST::delOne(int timeToSecond) {
-	cout << "DELONE" << endl;
+	//cout << "DELONE" << endl;
 	if(this->search(timeToSecond) == nullptr) {
 		return -1;
 	}

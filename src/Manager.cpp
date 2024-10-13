@@ -51,24 +51,23 @@ void Manager::Run(const char* command)
     // Read and Run command
     string cmd; //temp commandline
     while(getline(fcmd, cmd)) {
-        cout << cmd << endl;
+        //cout << cmd << endl;
         int result = 0;
 
-        vector<string> cuts;
+        vector<string> cuts; //ARG CUTS
         cuts = split(cmd, " ");
         
         if(cmd == "LOAD") {
-            if(cuts.size() != 1) {
+            if(cuts.size() != 1) { //ARGS CHECK
                 result = -1;
             } else {
-                flog << "===== LOAD =====" << endl;
                 result = this->load();
             }
             if(result == 0) flog << "===============\n" << endl;
             else PrintErrorCode(100);
 
-        } else if(cmd == "QPOP") {
-            if(cuts.size() != 1) {
+        } else if(cmd == "QPOP") { //QPOP COMMAND
+            if(cuts.size() != 1) { //ARGS CHECK
                 result = -1;
             } else {
                 result = this->qpop();
@@ -76,22 +75,20 @@ void Manager::Run(const char* command)
             if(result == 0) PrintSuccess("QPOP");
             else PrintErrorCode(200);
 
-        } else if(cuts[0] == "PRINT") {
-            if(cuts.size() > 2) {
+        } else if(cuts[0] == "PRINT") { //PRINT COMMAND
+            if(cuts.size() > 2) { //ARGS CHECK
                 result = -1;
-            } else if(cuts.size() == 2) {
-                flog << "===== PRINT =====" << endl;
+            } else if(cuts.size() == 2) { //IF HAVE ARG
                 result = this->print(stoi(cuts[1]));
             } else {
-                flog << "===== PRINT =====" << endl;
                 result = this->print();
             }
             if(result == 0) flog << "===============\n" << endl;
             else PrintErrorCode(300);
 
         } else if(cuts[0] == "SECTION") {
-            cout << cuts.size() << endl;
-            if(cuts.size() > 4 || cuts.size() < 4) {
+            //cout << cuts.size() << endl;
+            if(cuts.size() > 4 || cuts.size() < 4) { //ARGS CHECK
                 result = -1;
             } else {
                 int num = stoi(cuts[1]);
@@ -106,12 +103,12 @@ void Manager::Run(const char* command)
             else PrintErrorCode(400);
 
         } else if(cuts[0] == "DELETE") {
-            if(cuts.size() > 3 || cuts.size() < 3) {
+            if(cuts.size() > 3 || cuts.size() < 3) { //ARGS CHECK
                 result = -1;
             } else {
                 vector<string> timecuts = split(cuts[2], ":");
                 int time = stoi(timecuts[0])*3600 + stoi(timecuts[1])*60 + stoi(timecuts[2]);
-                if(cuts[1] == "UNDER") {
+                if(cuts[1] == "UNDER") { //ARG CHECK TO CHANGE MODE
                     result = this->del(0, time);
                 } else {
                     result = this->del(1, time);
@@ -155,7 +152,7 @@ int Manager::load() {
     if(!(this->q.IsEmpty())) { //already loaded
         return -1;
     }
-    
+    flog << "===== LOAD =====" << endl;
     string str;
     while(getline(fsub, str)) {
         int h = stoi(str.substr(0, 2)); //00:
@@ -164,6 +161,7 @@ int Manager::load() {
         //int time = timeInSeconds(h, m, s);
         string content = str.substr(9); //00:00:00 |
 
+        if(this->q.IsFull()) return -1;
         this->q.Push(h, m, s, content);
 
         flog << setfill('0');
@@ -176,7 +174,7 @@ int Manager::load() {
 }
 // QPOP
 int Manager::qpop() {
-    if(this->q.IsEmpty()) return -1;
+    if(this->q.IsEmpty()) exit(-1);
     while(!this->q.IsEmpty()) {
         this->bst.insert(this->q.Pop().sub);
         //this->bst.print(cout);
@@ -186,12 +184,14 @@ int Manager::qpop() {
 // PRINT
 int Manager::print() {
     if(!this->bst.getRoot()) return -1;
+    flog << "===== PRINT =====" << endl;
     this->bst.print(flog);
     return 0;
 }
-int Manager::print(int number) {
+int Manager::print(int number) { //ARG PRINT
     SectionListNode* node = this->l.search(number);
     if(!node) return -1;
+    flog << "===== PRINT =====" << endl;
     node->print(flog);
     return 0;
 }
@@ -200,9 +200,15 @@ int Manager::section(int number, int start, int end) {
     
     SectionListNode* newNode = new SectionListNode(number);
     newNode->sets(this->bst.getRoot(), start, end);
-    newNode->print(cout);
-    l.insert(newNode);
-    return 0;
+
+    if(newNode->size() == 0) {
+        return -1;
+    } else {
+        l.insert(newNode);
+        return 0;
+    }
+    //newNode->print(cout);
+    
 }
 // DELETE
 int Manager::del(int mode, int time) {

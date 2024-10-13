@@ -27,6 +27,8 @@ void SubtitleQueue::Push(int h, int m, int s, string str)
         this->rear = (this->rear + 1)%(MAX+1); //move rear to next position;
         this->queue[this->rear].sub.set(h, m, s, str); //rear position subtitle set
         return;
+    } else {
+        exit(-1);
     }
     return;
 }
